@@ -46,9 +46,14 @@ include '../app/templates/header.php';
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Device Management</h5>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeviceModal">
-                        <i class="fas fa-plus"></i> Add Device
-                    </button>
+                    <div class="d-flex gap-2 ms-auto">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeviceModal">
+                            <i class="fas fa-plus"></i> Add Device
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="fetchAllLogs(this)">
+                            <i class="fas fa-sync-alt"></i> Fetch All Logs
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div id="ajax-messages"></div> <?php if ($successMessage): ?>
@@ -242,6 +247,83 @@ function fetchLogs(button, deviceId) {
     .finally(() => {
         button.disabled = false;
         button.innerHTML = originalContent;
+    });
+}
+
+function fetchAllLogs(button) {
+    const originalContent = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching All...';
+    document.getElementById('ajax-messages').innerHTML = '';
+
+    const deviceButtons = document.querySelectorAll('button[onclick^="fetchLogs("]');
+    let totalFetched = 0;
+    let totalSaved = 0;
+    let errors = [];
+    let completedFetches = 0;
+
+    if (deviceButtons.length === 0) {
+        document.getElementById('ajax-messages').innerHTML = `<div class="alert alert-info">No devices to fetch logs from.</div>`;
+        button.disabled = false;
+        button.innerHTML = originalContent;
+        return;
+    }
+
+    deviceButtons.forEach(btn => {
+        const deviceId = btn.onclick.toString().match(/fetchLogs\(this, (\d+)\)/)[1];
+        
+        // Temporarily disable individual fetch buttons and show spinner
+        const originalBtnContent = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        fetch('../api/fetch_device_logs.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ device_id: deviceId })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                totalFetched += data.fetched_total;
+                totalSaved += data.saved_new;
+            } else {
+                errors.push(`Device ${deviceId}: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            errors.push(`Device ${deviceId}: Failed to fetch logs. Device might be offline or unreachable.`);
+            console.error(`Fetch All Logs Error for Device ${deviceId}:`, error);
+        })
+        .finally(() => {
+            completedFetches++;
+            // Re-enable individual button and restore content
+            btn.disabled = false;
+            btn.innerHTML = originalBtnContent;
+
+            if (completedFetches === deviceButtons.length) {
+                // All fetches completed
+                let finalMessage = `Finished fetching logs from all devices. Total fetched: ${totalFetched}, Total new records saved: ${totalSaved}.`;
+                let msgClass = 'alert-success';
+
+                if (errors.length > 0) {
+                    msgClass = 'alert-warning';
+                    finalMessage += `<br>Some devices encountered errors:<br>${errors.join('<br>')}`;
+                } else if (totalFetched === 0 && totalSaved === 0) {
+                    msgClass = 'alert-info';
+                    finalMessage = `No new logs found from any device.`;
+                }
+                
+                document.getElementById('ajax-messages').innerHTML = `<div class="alert ${msgClass}">${finalMessage}</div>`;
+                button.disabled = false;
+                button.innerHTML = originalContent;
+            }
+        });
     });
 }
 

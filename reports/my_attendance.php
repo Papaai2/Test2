@@ -6,6 +6,24 @@ require_once __DIR__ . '/../app/core/helpers.php';
 require_login();
 
 $user_id = get_current_user_id();
+
+if (!$user_id) {
+    // Log the error for debugging
+    error_log("User ID not found in session for my_attendance.php. Session might be stale or user deleted.");
+    
+    // Invalidate the session and redirect to login
+    session_unset();
+    session_destroy();
+    setcookie(session_name(), '', time() - 3600, '/'); // Destroy session cookie
+    
+    // Ensure BASE_URL is defined before using it
+    if (!defined('BASE_URL')) {
+        require_once __DIR__ . '/../app/core/config.php';
+    }
+    header("Location: " . BASE_URL . "/login.php?error=session_expired");
+    exit('Session expired. Please log in again.');
+}
+
 $page_title = 'My Attendance Logs';
 include __DIR__ . '/../app/templates/header.php';
 
@@ -15,31 +33,29 @@ $end_date = $_GET['end_date'] ?? date('Y-m-d'); // Default to current date
 // Fetch attendance logs for the current user with date filtering
 $sql = "
     SELECT
-        al.punch_time,
-        al.punch_state,
-        al.status,
-        al.violation_type,
-        s.shift_name
+        DATE(al.punch_time) AS attendance_date,
+        MIN(CASE WHEN al.punch_state = 0 THEN al.punch_time END) AS first_in,
+        MAX(CASE WHEN al.punch_state = 1 THEN al.punch_time END) AS last_out,
+        GROUP_CONCAT(DISTINCT al.violation_type ORDER BY al.violation_type ASC SEPARATOR ', ') AS daily_violations,
+        s.shift_name,
+        s.start_time AS shift_start_time,
+        s.end_time AS shift_end_time,
+        s.is_night_shift
     FROM
         attendance_logs al
     LEFT JOIN
         shifts s ON al.shift_id = s.id
     WHERE
         al.user_id = ?
+        AND DATE(al.punch_time) >= ?
+        AND DATE(al.punch_time) <= ?
+    GROUP BY
+        attendance_date, al.user_id, s.shift_name, s.start_time, s.end_time, s.is_night_shift
+    ORDER BY
+        attendance_date DESC
 ";
 
-$params = [$user_id];
-
-if (!empty($start_date)) {
-    $sql .= " AND DATE(al.punch_time) >= ?";
-    $params[] = $start_date;
-}
-if (!empty($end_date)) {
-    $sql .= " AND DATE(al.punch_time) <= ?";
-    $params[] = $end_date;
-}
-
-$sql .= " ORDER BY al.punch_time DESC";
+$params = [$user_id, $start_date, $end_date];
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
@@ -85,24 +101,45 @@ $attendance_logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>Date & Time</th>
-                            <th>Type</th>
+                            <th>Date</th>
+                            <th>First In</th>
+                            <th>Last Out</th>
                             <th>Status</th>
-                            <th>Violation</th>
+                            <th>Violations</th>
                             <th>Shift</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($attendance_logs as $log): ?>
+                            <?php
+                                $daily_status = 'Absent';
+                                if ($log['first_in'] && $log['last_out']) {
+                                    $daily_status = 'Present';
+                                } elseif ($log['first_in'] || $log['last_out']) {
+                                    $daily_status = 'Incomplete';
+                                }
+                            ?>
                             <tr>
-                                <td><?= htmlspecialchars(date('M d, Y H:i A', strtotime($log['punch_time']))) ?></td>
+                                <td><?= htmlspecialchars(date('M d, Y', strtotime($log['attendance_date']))) ?></td>
+                                <td><?= $log['first_in'] ? htmlspecialchars(date('h:i A', strtotime($log['first_in']))) : '<span class="text-muted">--</span>' ?></td>
+                                <td><?= $log['last_out'] ? htmlspecialchars(date('h:i A', strtotime($log['last_out']))) : '<span class="text-muted">--</span>' ?></td>
                                 <td>
-                                    <span class="badge <?= $log['punch_state'] == 0 ? 'bg-success' : 'bg-danger' ?>">
-                                        <?= $log['punch_state'] == 0 ? 'Punch In' : 'Punch Out' ?>
+                                    <span class="badge <?= getStatusBadgeClass($daily_status) ?>">
+                                        <?= htmlspecialchars(getStatusText($daily_status)) ?>
                                     </span>
                                 </td>
-                                <td><?= htmlspecialchars(ucfirst($log['status'])) ?></td>
-                                <td><?= htmlspecialchars($log['violation_type'] ?? 'N/A') ?></td>
+                                <td>
+                                    <?php if (!empty($log['daily_violations'])): ?>
+                                        <?php
+                                        $violations = explode(', ', $log['daily_violations']);
+                                        foreach ($violations as $violation):
+                                            echo '<span class="badge ' . getViolationBadgeClass($violation) . ' me-1">' . htmlspecialchars(getStatusText($violation)) . '</span>';
+                                        endforeach;
+                                        ?>
+                                    <?php else: ?>
+                                        <span class="badge bg-success">None</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?= htmlspecialchars($log['shift_name'] ?? 'N/A') ?></td>
                             </tr>
                         <?php endforeach; ?>

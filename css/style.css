@@ -612,7 +612,7 @@ a:hover {
 
 #notification-bell {
     color: #ffffff !important; /* Pure white bell icon */
-    font-size: 1.3rem; /* Slightly larger */
+    /* Removed explicit font-size to allow fa-sm to control size */
 }
 
 #notification-count {

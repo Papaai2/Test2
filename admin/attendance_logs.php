@@ -173,7 +173,7 @@ include '../app/templates/header.php';
                                 <tr>
                                     <td><?php echo htmlspecialchars($log['id']); ?></td>
                                     <td><?php echo htmlspecialchars($log['full_name'] . ' (' . $log['employee_code'] . ')'); ?></td>
-                                    <td><?php echo htmlspecialchars((new DateTime($log['punch_time']))->format('Y-m-d H:i:s')); ?></td>
+                                    <td><?php echo htmlspecialchars((new DateTime($log['punch_time']))->format('Y-m-d h:i A')); ?></td>
                                     <td>
                                         <span class="badge <?php echo $log['display_punch_state'] == 0 ? 'bg-success' : 'bg-primary'; ?>">
                                             <?php echo $log['display_punch_state'] == 0 ? 'In' : 'Out'; ?>

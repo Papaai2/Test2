@@ -98,6 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         notificationBell.addEventListener('click', fetchNotifications);
         fetchNotifications(); // Initial fetch on page load
+
+        // Explicitly initialize Bootstrap Dropdown for the notification bell
+        const notificationDropdown = new bootstrap.Dropdown(notificationBell);
     }
 
     // --- Dashboard Enhancements ---

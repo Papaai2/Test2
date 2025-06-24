@@ -32,9 +32,20 @@ $stmt_user->execute([$user_id]);
 $user_details = $stmt_user->fetch(PDO::FETCH_ASSOC);
 
 if (!$user_details) {
-    // Handle case where user details are not found (shouldn't happen if require_login works)
-    http_response_code(404);
-    exit('User details not found.');
+    // Log the error for debugging
+    error_log("User details not found for user ID: {$user_id}. Session might be stale or user deleted.");
+    
+    // Invalidate the session and redirect to login
+    session_unset();
+    session_destroy();
+    setcookie(session_name(), '', time() - 3600, '/'); // Destroy session cookie
+    
+    // Ensure BASE_URL is defined before using it
+    if (!defined('BASE_URL')) {
+        require_once __DIR__ . '/app/core/config.php';
+    }
+    header("Location: " . BASE_URL . "/login.php?error=session_expired");
+    exit('Session expired. Please log in again.');
 }
 
 $personal_info_error = '';

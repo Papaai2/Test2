@@ -43,9 +43,10 @@ This file tracks the project's completed tasks and outlines future development p
     -   Efficient pagination to handle a large number of log entries.
 -   **Audit Trail (`admin/audit_logs.php`)**: The system logs key administrator actions, such as device updates and log fetching, for accountability.
 -   **Leave Management (Foundation)**:
-    -   CRUD interface for `Leave Types` is implemented in `admin/leave_management.php`.
-    -   A page for viewing team vacation requests (`reports/manager_history.php`) is available for managers.
-    -   Bulk operations API (`api/bulk_operations.php`) exists for resetting leave balances and performing annual accruals.
+-   CRUD interface for `Leave Types` is implemented in `admin/leave_management.php`.
+-   A page for viewing team vacation requests (`reports/manager_history.php`) is available for managers.
+-   The API endpoint for fetching leave calendar data (`api/get_leave_calendar.php`) is available.
+-   Bulk operations API (`api/bulk_operations.php`) exists for resetting leave balances and performing annual accruals.
 
 ### **V. User Interface & Experience**
 
@@ -56,21 +57,19 @@ This file tracks the project's completed tasks and outlines future development p
 ## 🚀 Future Plans (Proposed Roadmap)
 
 ### **High Priority**
-1.  **Dashboard Implementation**:
-    -   Flesh out the main admin dashboard (`admin/index.php`) to be a true summary panel.
-    -   Create and display widgets for key metrics: "Employees Present Today," "Employees on Leave," "Devices Online," and a feed of recent violations.
-    -   Fully implement the `api/get_dashboard_stats.php` to provide live data for these widgets.
+1.  **Dashboard Enhancements**:
+    -   Refine the main admin dashboard (`admin/index.php`) to display more comprehensive key metrics and a feed of recent violations.
+    -   Enhance `api/get_dashboard_stats.php` to provide more detailed live data for dashboard widgets.
 
-2.  **Reporting Module**:
-    -   Create a dedicated "Reports" section in the navigation.
-    -   Build out the **Timesheet Report** (`reports/timesheet.php`) to calculate and display total work hours, overtime, and a summary of violations for selected employees and date ranges.
-    -   Implement the **Export to CSV** functionality for all reports, making `api/export_reports.php` fully operational.
+2.  **Reporting Module Enhancements**:
+    -   Further develop the **Timesheet Report** (`reports/timesheet.php`) to include more advanced calculations and display options for total work hours, overtime, and violations.
+    -   Improve the **Export to CSV** functionality for all reports (`api/export_reports.php`) to support more report types and customization.
 
-3.  **Complete the Leave Management Workflow**:
-    -   Build out the UI for employees to submit leave requests (`requests/create.php`) and view their request history (`requests/index.php`).
-    -   Create a dedicated interface for managers and HR to review and approve/reject requests (`requests/view.php`), including adding comments.
-    -   Implement the logic for automatically calculating and updating leave balances when requests are approved.
-    -   Develop the Leave Calendar (`api/get_leave_calendar.php`) into a visual tool on the dashboard or a dedicated page.
+3.  **Leave Management Workflow Enhancements**:
+    -   The core workflow for employees to submit leave requests (`requests/create.php`) and view their request history (`requests/index.php`) is implemented.
+    -   The interface for managers and HR to review, approve, and reject requests (`requests/view.php`) is largely functional, including comment and attachment handling.
+    -   Logic for automatically calculating and updating leave balances upon approval and cancellation is in place.
+    -   The backend API for the Leave Calendar (`api/get_leave_calendar.php`) and its rendering logic in `js/main.js` are implemented. Further development is needed to integrate this into a comprehensive visual tool on the dashboard or a dedicated page.
 
 ### **Medium Priority**
 4.  **Manual Attendance Correction**:

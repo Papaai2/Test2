@@ -10,11 +10,12 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($page_title) ? htmlspecialchars($page_title) . ' - ' . htmlspecialchars(SITE_NAME) : htmlspecialchars(SITE_NAME); ?></title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="<?= BASE_URL ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/all.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/style.css">
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="<?= BASE_URL ?>/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <script>
@@ -37,18 +38,18 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
                 ?>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <a href="/index.php" class="list-group-item list-group-item-action <?= isActive('/index.php') ? 'active' : '' ?>">
-                        <i class="bi bi-speedometer2 me-3"></i><span>Dashboard</span>
+                        <i class="fas fa-home me-3"></i><span>Dashboard</span>
                     </a>
                     <a href="/requests/index.php" class="list-group-item list-group-item-action <?= isActive('/requests/index.php') || isActive('/requests/create.php') || isActive('/requests/view.php') ? 'active' : '' ?>">
-                        <i class="bi bi-send-check me-3"></i><span>My Requests</span>
+                        <i class="fas fa-paper-plane me-3"></i><span>My Requests</span>
                     </a>
                     <a href="/reports/my_attendance.php" class="list-group-item list-group-item-action <?= isActive('/reports/my_attendance.php') ? 'active' : '' ?>">
-                        <i class="bi bi-calendar-check me-3"></i><span>My Attendance</span>
+                        <i class="fas fa-calendar-check me-3"></i><span>My Attendance</span>
                     </a>
                     
                     <?php if (in_array($_SESSION['role'], ['manager', 'admin', 'hr_manager'])): ?>
                         <a class="list-group-item list-group-item-action dropdown-toggle <?= isActive('/reports/team.php') || isActive('/reports/manager_history.php') ? 'active' : '' ?>" href="#teamReportsSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="<?= isActive('/reports/team.php') || isActive('/reports/manager_history.php') ? 'true' : 'false' ?>" aria-controls="teamReportsSubmenu">
-                            <i class="bi bi-graph-up me-3"></i><span>Team Reports</span>
+                            <i class="fas fa-chart-line me-3"></i><span>Team Reports</span>
                         </a>
                         <div class="collapse <?= isActive('/reports/team.php') || isActive('/reports/manager_history.php') ? 'show' : '' ?>" id="teamReportsSubmenu">
                             <a class="list-group-item list-group-item-action ps-5 <?= isActive('/reports/team.php') ? 'active' : '' ?>" href="/reports/team.php">My Team</a>
@@ -58,7 +59,7 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
 
                     <?php if (in_array($_SESSION['role'], ['hr', 'hr_manager', 'admin'])): ?>
                          <a class="list-group-item list-group-item-action dropdown-toggle <?= isActive('/reports/hr_history.php') || isActive('/reports/user_balances.php') || isActive('/reports/timesheet.php') ? 'active' : '' ?>" href="#hrReportsSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="<?= isActive('/reports/hr_history.php') || isActive('/reports/user_balances.php') || isActive('/reports/timesheet.php') ? 'true' : 'false' ?>" aria-controls="hrReportsSubmenu">
-                            <i class="bi bi-file-earmark-bar-graph me-3"></i><span>HR Reports</span>
+                            <i class="fas fa-chart-bar me-3"></i><span>HR Reports</span>
                         </a>
                         <div class="collapse <?= isActive('/reports/hr_history.php') || isActive('/reports/user_balances.php') || isActive('/reports/timesheet.php') ? 'show' : '' ?>" id="hrReportsSubmenu">
                             <a class="list-group-item list-group-item-action ps-5 <?= isActive('/reports/hr_history.php') ? 'active' : '' ?>" href="/reports/hr_history.php">Full History</a>
@@ -70,12 +71,12 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
                     
                     <?php if (in_array($_SESSION['role'], ['hr', 'hr_manager', 'admin'])): ?>
                         <a href="/admin/index.php" class="list-group-item list-group-item-action <?= strpos($_SERVER['REQUEST_URI'], '/admin/') !== false ? 'active' : '' ?>">
-                            <i class="bi bi-gear me-3"></i><span>Admin Panel</span>
+                            <i class="fas fa-cog me-3"></i><span>Admin Panel</span>
                         </a>
                     <?php endif; ?>
                 <?php else: ?>
                     <a href="/login.php" class="list-group-item list-group-item-action <?= isActive('/login.php') ? 'active' : '' ?>">
-                        <i class="bi bi-box-arrow-in-right me-3"></i><span>Login</span>
+                        <i class="fas fa-sign-in-alt me-3"></i><span>Login</span>
                     </a>
                 <?php endif; ?>
             </div>
@@ -98,7 +99,7 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <a class="nav-link" href="#" id="notification-bell" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-bell-fill position-relative">
+                                        <i class="fas fa-bell position-relative">
                                             <span id="notification-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="display: none;"></span>
                                         </i>
                                     </a>
@@ -110,15 +111,15 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-person-circle me-2"></i> <?php echo htmlspecialchars($_SESSION['full_name']); ?>
+                                        <i class="fas fa-user-circle me-2"></i> <?php echo htmlspecialchars($_SESSION['full_name']); ?>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <?php if (in_array($_SESSION['role'], ['admin'])): ?>
-                                            <li><a class="dropdown-item" href="/admin/audit_logs.php"><i class="bi bi-file-earmark-text me-2"></i>Audit Logs</a></li>
+                                            <li><a class="dropdown-item" href="/admin/audit_logs.php"><i class="fas fa-file-alt me-2"></i>Audit Logs</a></li>
                                             <li><div class="dropdown-divider"></div></li>
                                         <?php endif; ?>
-                                        <li><a class="dropdown-item" href="/user_settings.php"><i class="bi bi-person-gear me-2"></i>Settings</a></li>
-                                        <li><a class="dropdown-item" href="/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                                        <li><a class="dropdown-item" href="/user_settings.php"><i class="fas fa-user-cog me-2"></i>Settings</a></li>
+                                        <li><a class="dropdown-item" href="/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                                     </ul>
                                 </li>
                             </ul>

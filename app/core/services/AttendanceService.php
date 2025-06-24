@@ -19,7 +19,7 @@ class AttendanceService
         }
     }
 
-    public function processPunch(string $employeeCode, string $punchTime)
+    public function processPunch(string $employeeCode, string $punchTime, ?int $punchState = null)
     {
         $userShiftDetails = $this->getUserAndShiftDetails($employeeCode);
         if (!$userShiftDetails) {
@@ -35,8 +35,10 @@ class AttendanceService
         // Correct erroneous punches
         $correctedPunches = $this->correctErroneousPunches($userId, $allPunchesForDay, $userShiftDetails['shift']);
 
-        // Determine punch state (IN or OUT) based on corrected punches
-        $punchState = $this->determinePunchState($userId, $punchTime, $correctedPunches);
+        // Determine punch state if not explicitly provided
+        if ($punchState === null) {
+            $punchState = $this->determinePunchState($userId, $punchTime, $correctedPunches);
+        }
 
         $violation = $this->calculateViolation($punchTime, $punchState, $userShiftDetails['shift']);
 
@@ -50,7 +52,7 @@ class AttendanceService
     public function saveStandardizedLogs(array $logs): int
     {
         $savedCount = 0;
-        $processedLogs = [];
+        $filteredPunchesToProcess = []; // Initialize here
 
         // Group logs by employee_code and date
         $dailyPunches = [];
@@ -63,7 +65,7 @@ class AttendanceService
             $dailyPunches[$log['employee_code']][$punchDate][] = $log;
         }
 
-        // For each user and each day, identify the earliest and latest punch
+        // For each user and each day, identify the earliest and latest punch and assign state
         foreach ($dailyPunches as $employeeCode => $dates) {
             foreach ($dates as $punchDate => $punches) {
                 // Sort punches for the day by time to easily find first and last
@@ -72,11 +74,13 @@ class AttendanceService
                 $earliestPunch = $punches[0]; // First punch of the day
                 $latestPunch = end($punches); // Last punch of the day
 
-                // Add the earliest punch
+                // Explicitly assign punch state for earliest and latest
+                $earliestPunch['punch_state'] = self::PUNCH_IN;
                 $filteredPunchesToProcess[] = $earliestPunch;
 
-                // If there's more than one unique punch for the day, add the latest punch
+                // If there's more than one unique punch for the day, add the latest punch as OUT
                 if ($earliestPunch['punch_time'] !== $latestPunch['punch_time']) {
+                    $latestPunch['punch_state'] = self::PUNCH_OUT;
                     $filteredPunchesToProcess[] = $latestPunch;
                 }
             }
@@ -86,7 +90,7 @@ class AttendanceService
         usort($filteredPunchesToProcess, fn($a, $b) => strcmp($a['punch_time'], $b['punch_time']));
 
         foreach ($filteredPunchesToProcess as $log) {
-            // Before processing, check if this specific punch_time for this user already exists
+            // Before processing, check if this specific punch_time for this user and state already exists
             // This prevents redundant processing of logs already in the database
             $userShiftDetails = $this->getUserAndShiftDetails($log['employee_code']);
             if (!$userShiftDetails) {
@@ -95,17 +99,19 @@ class AttendanceService
             }
             $userId = $userShiftDetails['user_id'];
 
-            $checkSql = "SELECT COUNT(*) FROM attendance_logs WHERE user_id = ? AND punch_time = ?";
+            // Check for existing record with the same user_id, punch_time, AND punch_state
+            $checkSql = "SELECT COUNT(*) FROM attendance_logs WHERE user_id = ? AND punch_time = ? AND punch_state = ?";
             $checkStmt = $this->pdo->prepare($checkSql);
-            $checkStmt->execute([$userId, $log['punch_time']]);
+            $checkStmt->execute([$userId, $log['punch_time'], $log['punch_state']]);
             if ($checkStmt->fetchColumn() > 0) {
-                // Log for this user and punch_time already exists, skip processing
+                // Log for this user, punch_time, and punch_state already exists, skip processing
                 continue;
             }
 
             try {
                 // processPunch returns true on success, or a string message on failure
-                if ($this->processPunch($log['employee_code'], $log['punch_time']) === true) {
+                // Pass the explicitly determined punch_state
+                if ($this->processPunch($log['employee_code'], $log['punch_time'], $log['punch_state']) === true) {
                     $savedCount++;
                 }
             } catch (Exception $e) {

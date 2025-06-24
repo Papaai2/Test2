@@ -34,13 +34,13 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0">Users</h5>
                         <small class="text-muted">Manage employee accounts and roles.</small>
                     </div>
-                    <i class="bi bi-people-fill fs-1 text-primary"></i>
+                    <i class="fas fa-users fs-1 text-primary"></i>
                 </div>
                 <h2 class="mt-auto mb-0 fw-bold"><?= $user_count ?></h2>
                 <small class="text-muted">Active Users</small>
             </div>
             <div class="card-footer">
-                <a href="users.php" class="stretched-link">Go to User Management <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="users.php" class="stretched-link">Go to User Management <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -54,13 +54,13 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0 text-danger">Attendance Logs</h5>
                         <small class="text-muted">View and manage all attendance records.</small>
                     </div>
-                    <i class="bi bi-clipboard-data-fill fs-1 text-danger"></i>
+                    <i class="fas fa-clipboard-list fs-1 text-danger"></i>
                 </div>
                 <h2 class="mt-auto mb-0 fw-bold"><?= $violation_count ?></h2>
                 <small class="text-muted">Total Entries</small>
             </div>
             <div class="card-footer">
-                <a href="attendance_logs.php" class="stretched-link">View Attendance Logs <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="attendance_logs.php" class="stretched-link">View Attendance Logs <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -74,11 +74,11 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0">Leave Management</h5>
                         <small class="text-muted">Manage leave types, accruals, and employee leave requests.</small>
                     </div>
-                    <i class="bi bi-calendar-check fs-1 text-success"></i>
+                    <i class="fas fa-calendar-alt fs-1 text-success"></i>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="leave_management.php" class="stretched-link">Go to Leave Management <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="leave_management.php" class="stretched-link">Go to Leave Management <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -92,11 +92,11 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0">Departments</h5>
                         <small class="text-muted">Manage company departments.</small>
                     </div>
-                    <i class="bi bi-building fs-1 text-info"></i>
+                    <i class="fas fa-building fs-1 text-info"></i>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="departments.php" class="stretched-link">Manage Departments <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="departments.php" class="stretched-link">Manage Departments <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -110,11 +110,11 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0">Shift Management</h5>
                         <small class="text-muted">Configure and assign work shifts.</small>
                     </div>
-                    <i class="bi bi-clock-history fs-1 text-warning"></i>
+                    <i class="fas fa-clock fs-1 text-warning"></i>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="shifts.php" class="stretched-link">Manage Shifts <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="shifts.php" class="stretched-link">Manage Shifts <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -129,11 +129,11 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0">Device Management</h5>
                         <small class="text-muted">Manage fingerprint devices.</small>
                     </div>
-                    <i class="bi bi-fingerprint fs-1 text-secondary"></i>
+                    <i class="fas fa-fingerprint fs-1 text-secondary"></i>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="devices.php" class="stretched-link">Manage Devices <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="devices.php" class="stretched-link">Manage Devices <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>
@@ -147,11 +147,11 @@ include __DIR__ . '/../app/templates/header.php';
                         <h5 class="card-title mb-0">Audit Logs</h5>
                         <small class="text-muted">Track all administrative actions.</small>
                     </div>
-                    <i class="bi bi-journal-text fs-1 text-dark"></i>
+                    <i class="fas fa-book fs-1 text-dark"></i>
                 </div>
             </div>
             <div class="card-footer">
-                <a href="audit_logs.php" class="stretched-link">View Audit Logs <i class="bi bi-arrow-right ms-2"></i></a>
+                <a href="audit_logs.php" class="stretched-link">View Audit Logs <i class="fas fa-arrow-right ms-2"></i></a>
             </div>
         </div>
     </div>

@@ -109,14 +109,14 @@ include __DIR__ . '/app/templates/header.php';
     <div class="col-lg-8">
         <?php if (!empty($pending_manager_requests) || !empty($pending_hr_requests)): ?>
             <div class="alert alert-warning alert-dismissible fade show border-0" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> You have requests that require your action.
+                <i class="fas fa-exclamation-triangle me-2"></i> You have requests that require your action.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
 
         <?php if (!empty($pending_manager_requests)): ?>
         <div class="card mb-5">
-            <div class="card-header"><h2 class="h5 mb-0"><i class="bi bi-person-check-fill me-2"></i>Manager Approval Queue</h2></div>
+            <div class="card-header"><h2 class="h5 mb-0"><i class="fas fa-user-check me-2"></i>Manager Approval Queue</h2></div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -127,7 +127,7 @@ include __DIR__ . '/app/templates/header.php';
                                 <td><?= htmlspecialchars($request['user_name']) ?></td>
                                 <td><?= date('M d', strtotime($request['start_date'])) . ' - ' . date('M d, Y', strtotime($request['end_date'])) ?></td>
                                 <td><?= date('M d, Y', strtotime($request['created_at'])) ?></td>
-                                <td><a href="<?= BASE_URL ?>/requests/view.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-primary"><i class="bi bi-eye me-1"></i> Review</a></td>
+                                <td><a href="<?= BASE_URL ?>/requests/view.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-eye me-1"></i> Review</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -139,7 +139,7 @@ include __DIR__ . '/app/templates/header.php';
         
         <?php if (!empty($pending_hr_requests)): ?>
         <div class="card mb-5">
-            <div class="card-header"><h2 class="h5 mb-0"><i class="bi bi-clipboard2-check-fill me-2"></i>HR Final Approval Queue</h2></div>
+            <div class="card-header"><h2 class="h5 mb-0"><i class="fas fa-clipboard-check me-2"></i>HR Final Approval Queue</h2></div>
             <div class="card-body">
                  <div class="table-responsive">
                     <table class="table table-striped table-hover">
@@ -150,7 +150,7 @@ include __DIR__ . '/app/templates/header.php';
                                 <td><?= htmlspecialchars($request['user_name']) ?></td>
                                 <td><?= date('M d', strtotime($request['start_date'])) . ' - ' . date('M d, Y', strtotime($request['end_date'])) ?></td>
                                 <td><span class="badge <?= getStatusBadgeClass($request['status']) ?>"><?= getStatusText($request['status']) ?></span></td>
-                                <td><a href="<?= BASE_URL ?>/requests/view.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-primary"><i class="bi bi-eye me-1"></i> Review</a></td>
+                                <td><a href="<?= BASE_URL ?>/requests/view.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-primary"><i class="fas fa-eye me-1"></i> Review</a></td>
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -163,7 +163,7 @@ include __DIR__ . '/app/templates/header.php';
         <?php if (in_array($user_role, ['hr', 'admin', 'hr_manager'])): ?>
         <?php if (!empty($hr_view_pending_manager)): ?>
             <div class="card mb-5">
-                <div class="card-header"><h2 class="h5 mb-0"><i class="bi bi-hourglass-split me-2"></i>Awaiting Manager Action</h2></div>
+                <div class="card-header"><h2 class="h5 mb-0"><i class="fas fa-hourglass-half me-2"></i>Awaiting Manager Action</h2></div>
                 <div class="card-body">
                     <p class="text-muted">The following requests are currently being reviewed by their respective managers.</p>
                     <div class="table-responsive">
@@ -175,7 +175,7 @@ include __DIR__ . '/app/templates/header.php';
                                     <td><?= htmlspecialchars($request['user_name']) ?></td>
                                     <td><?= htmlspecialchars($request['manager_name'] ?? 'N/A') ?></td>
                                     <td><?= date('M d, Y', strtotime($request['created_at'])) ?></td>
-                                    <td><a href="<?= BASE_URL ?>/requests/view.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="bi bi-eye me-1"></i> View</a></td>
+                                    <td><a href="<?= BASE_URL ?>/requests/view.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye me-1"></i> View</a></td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -190,8 +190,8 @@ include __DIR__ . '/app/templates/header.php';
             <div class="card-header calendar-header">
                 <h3 class="h5 mb-0">Team Leave Calendar</h3>
                 <div class="btn-group" role="group" aria-label="Calendar Navigation">
-                    <button type="button" class="btn btn-sm" id="prevMonth"><i class="bi bi-chevron-left"></i></button>
-                    <button type="button" class="btn btn-sm" id="nextMonth"><i class="bi bi-chevron-right"></i></button>
+                    <button type="button" class="btn btn-sm" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-sm" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
             <div class="card-body">
@@ -212,7 +212,7 @@ include __DIR__ . '/app/templates/header.php';
 
     <div class="col-lg-4">
         <div class="card mb-5">
-            <div class="card-header"><h2 class="h5 mb-0"><i class="bi bi-pie-chart-fill me-2"></i>My Leave Balances</h2></div>
+            <div class="card-header"><h2 class="h5 mb-0"><i class="fas fa-chart-pie me-2"></i>My Leave Balances</h2></div>
             <div class="card-body">
                 <?php if (empty($my_leave_balances)): ?>
                     <p class="text-muted">No leave balances found. Contact HR.</p>
@@ -238,17 +238,17 @@ include __DIR__ . '/app/templates/header.php';
         
          <div class="quick-actions card">
              <div class="card-body">
-                <h3 class="h5 mb-4"><i class="bi bi-lightning-charge-fill me-2"></i>Quick Actions</h3>
+                <h3 class="h5 mb-4"><i class="fas fa-bolt me-2"></i>Quick Actions</h3>
                 <a href="<?= BASE_URL ?>/requests/create.php" class="quick-action-btn">
-                    <div class="quick-action-icon"><i class="bi bi-calendar-plus-fill"></i></div>
+                    <div class="quick-action-icon"><i class="fas fa-calendar-plus"></i></div>
                     <div><strong>New Leave Request</strong><small class="d-block text-muted">Submit a new request for time off.</small></div>
                 </a>
                 <a href="<?= BASE_URL ?>/requests/index.php" class="quick-action-btn">
-                    <div class="quick-action-icon"><i class="bi bi-card-list"></i></div>
+                    <div class="quick-action-icon"><i class="fas fa-list-alt"></i></div>
                     <div><strong>My Requests</strong><small class="d-block text-muted">View your past and present requests.</small></div>
                 </a>
                 <a href="<?= BASE_URL ?>/user_settings.php#change-password-section" class="quick-action-btn">
-                    <div class="quick-action-icon"><i class="bi bi-key-fill"></i></div>
+                    <div class="quick-action-icon"><i class="fas fa-key"></i></div>
                     <div><strong>Change Password</strong><small class="d-block text-muted">Update your account password securely.</small></div>
                 </a>
              </div>
