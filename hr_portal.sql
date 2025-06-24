@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2025 at 09:56 PM
+-- Generation Time: Jun 24, 2025 at 11:25 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,6 +46,18 @@ CREATE TABLE `attendance_logs` (
 --
 
 TRUNCATE TABLE `attendance_logs`;
+--
+-- Dumping data for table `attendance_logs`
+--
+
+INSERT INTO `attendance_logs` (`id`, `user_id`, `employee_code`, `shift_id`, `punch_time`, `punch_state`, `status`, `violation_type`, `created_at`) VALUES
+(1, 2, '1178', 1, '2025-06-24 22:30:05', 0, 'invalid', 'late_in', '2025-06-24 20:22:49'),
+(2, 2, '1178', 1, '2025-06-24 23:17:58', 1, 'valid', 'overtime', '2025-06-24 20:22:49'),
+(3, 2, '1178', 1, '2025-06-24 23:22:56', 0, 'invalid', 'late_in', '2025-06-24 20:23:05'),
+(4, 2, '1178', 1, '2025-06-24 23:24:16', 1, 'valid', 'overtime', '2025-06-24 20:24:25'),
+(5, 2, '1178', 1, '2025-06-24 23:27:19', 0, 'invalid', 'late_in', '2025-06-24 20:27:27'),
+(6, 2, '1178', 1, '2025-06-24 23:56:35', 1, 'valid', 'overtime', '2025-06-24 20:56:44');
+
 -- --------------------------------------------------------
 
 --
@@ -65,6 +77,14 @@ CREATE TABLE `audit_logs` (
 --
 
 TRUNCATE TABLE `audit_logs`;
+--
+-- Dumping data for table `audit_logs`
+--
+
+INSERT INTO `audit_logs` (`id`, `user_id`, `action`, `details`, `created_at`) VALUES
+(1, 2, 'approve_request_manager', 'Manager approved request #1 for user \'Mohamed Taha\'. Status changed to \'pending_hr\'.', '2025-06-24 21:13:21'),
+(2, 2, 'approve_request_hr', 'HR approved request #1 for user \'Mohamed Taha\'. Final status: \'approved\'.', '2025-06-24 21:13:22');
+
 -- --------------------------------------------------------
 
 --
@@ -119,7 +139,7 @@ TRUNCATE TABLE `devices`;
 --
 
 INSERT INTO `devices` (`id`, `name`, `ip_address`, `port`, `device_brand`, `status`, `last_seen`, `created_at`, `updated_at`, `serial_number`) VALUES
-(1, 'FingerTec AC100C', '192.168.1.120', 4370, 'FingerTec', 'online', '2025-06-24 22:55:55', '2025-06-22 15:03:19', '2025-06-24 19:55:55', '8128191');
+(1, 'FingerTec AC100C', '192.168.1.120', 4370, 'FingerTec', 'online', '2025-06-25 00:01:40', '2025-06-22 15:03:19', '2025-06-24 21:01:40', '8128191');
 
 -- --------------------------------------------------------
 
@@ -148,7 +168,7 @@ TRUNCATE TABLE `leave_balances`;
 INSERT INTO `leave_balances` (`id`, `user_id`, `leave_type_id`, `balance_days`, `last_accrual_date`, `last_updated_at`) VALUES
 (1, 2, 1, 21, '2025-06-22', '2025-06-22 20:20:08'),
 (11, 3, 1, 21, '2025-06-22', '2025-06-22 20:20:08'),
-(12, 4, 1, 20, '2025-06-22', '2025-06-22 20:25:18'),
+(12, 4, 1, 19, '2025-06-22', '2025-06-24 21:13:22'),
 (13, 5, 1, 21, '2025-06-22', '2025-06-22 20:20:08'),
 (14, 6, 1, 21, '2025-06-22', '2025-06-22 20:20:08');
 
@@ -197,6 +217,20 @@ CREATE TABLE `notifications` (
 --
 
 TRUNCATE TABLE `notifications`;
+--
+-- Dumping data for table `notifications`
+--
+
+INSERT INTO `notifications` (`id`, `user_id`, `message`, `is_read`, `request_id`, `created_at`) VALUES
+(1, 3, 'New vacation request from Mohamed Taha.', 0, 1, '2025-06-24 21:13:16'),
+(2, 2, 'New request submitted by Mohamed Taha, awaiting manager review.', 1, 1, '2025-06-24 21:13:16'),
+(3, 5, 'New request submitted by Mohamed Taha, awaiting manager review.', 0, 1, '2025-06-24 21:13:16'),
+(4, 6, 'New request submitted by Mohamed Taha, awaiting manager review.', 0, 1, '2025-06-24 21:13:16'),
+(5, 5, 'Leave request for Mohamed Taha (ID: 4) has been approved by their manager.', 0, 1, '2025-06-24 21:13:21'),
+(6, 4, 'Your leave request (#1) has been approved by your manager.', 1, 1, '2025-06-24 21:13:21'),
+(7, 4, 'Your leave request (#1) has been fully approved by HR.', 1, 1, '2025-06-24 21:13:22'),
+(8, 3, 'Leave request for Mohamed Taha (#1) has been fully approved by HR.', 0, 1, '2025-06-24 21:13:22');
+
 -- --------------------------------------------------------
 
 --
@@ -318,6 +352,13 @@ CREATE TABLE `vacation_requests` (
 
 TRUNCATE TABLE `vacation_requests`;
 --
+-- Dumping data for table `vacation_requests`
+--
+
+INSERT INTO `vacation_requests` (`id`, `user_id`, `leave_type_id`, `duration_days`, `start_date`, `end_date`, `reason`, `attachment_path`, `status`, `manager_id`, `hr_id`, `action_at`, `created_at`) VALUES
+(1, 4, 1, 1, '2025-06-25', '2025-06-25', 'Test', '', 'approved', 3, NULL, '2025-06-24 21:13:22', '2025-06-24 21:13:16');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -417,13 +458,13 @@ ALTER TABLE `vacation_requests`
 -- AUTO_INCREMENT for table `attendance_logs`
 --
 ALTER TABLE `attendance_logs`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `departments`
@@ -453,7 +494,7 @@ ALTER TABLE `leave_types`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `request_comments`
@@ -477,7 +518,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vacation_requests`
 --
 ALTER TABLE `vacation_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
