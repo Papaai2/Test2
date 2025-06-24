@@ -64,6 +64,7 @@ a:hover {
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
     position: relative; /* Ensure z-index works */
     z-index: 1; /* Default z-index for cards */
+    overflow: hidden; /* Crucial for ensuring content respects border-radius */
 }
 
 .card:hover {
