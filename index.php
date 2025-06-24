@@ -255,6 +255,4 @@ include __DIR__ . '/app/templates/header.php';
         </div>
     </div>
 </div>
-<?php $timestamp = time(); ?>
-<script src="js/main.js?t=<?php echo $timestamp; ?>"></script>
 <?php include __DIR__ . '/app/templates/footer.php'; ?>

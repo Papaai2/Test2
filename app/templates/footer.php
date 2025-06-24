@@ -12,6 +12,7 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/js/form-validation.js"></script>
+    <script src="/js/main.js?t=<?php echo time(); ?>"></script> <!-- Moved from index.php for global inclusion -->
 
 <?php
 // Conditionally load page-specific JavaScript to keep the site fast
