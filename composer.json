@@ -1,0 +1,6 @@
+{
+    "name": "joseph.ashraf/htdocs",
+    "require": {
+        "coding-libs/zkteco-php": "*"
+    }
+}

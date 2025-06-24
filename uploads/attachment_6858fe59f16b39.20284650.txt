@@ -1,0 +1,84 @@
+i need a specific detailed prompt , i want it as a prompt that will be given to ai model using api
+i want to use (html - css - php - js - mysql)
+no other things
+and don't give me the folder structure i just want the ai api to design by himself
+
+lets create a new HR_Portal (modern design and mobile optimization)
+with dashboard that have the leave calander and annual credit left for the user - leave management (user create it then manager have to approve it then it go to hr_manager to approve it but since it's create the hr_manager should see it) - notification system- roles for admin - hr_manager - direct managers and  and normal HR and employees - attendance tracking and i want it to be able to integrate with fingertec fingerprint machines - payroll management - user management - department managment
+and don't forget to create database sql for the porject
+and im gonna use this website cloud when we finish it but for now i will use it on localhost using xampp
+
+and create folders for organizing
+and create a full implementation
+i want a specific prompt 
+
+---------------------------
+Create a fully implemented modern HR Portal system using only HTML, CSS, PHP, JavaScript, and MySQL. Do not use any external libraries or frameworks.
+
+The portal must support:
+
+Responsive and mobile-optimized design with modern UI/UX.
+
+Dashboard showing:
+
+A leave calendar view for the logged-in user.
+
+The user’s annual leave credit balance.
+
+Leave Management Module:
+
+Employees can create leave requests.
+
+The assigned direct manager must review and approve/reject the leave.
+
+After manager approval, the HR manager must also approve/reject it.
+
+All leave requests must be visible to HR managers from the moment they're created.
+
+Attendance Tracking:
+
+Store daily clock-in and clock-out.
+
+Allow integration with FingerTec fingerprint attendance machines (assume cloud server support for later integration, for now just prepare endpoints and logic).
+
+Notification System:
+
+Notify users about approvals, rejections, attendance alerts, etc.
+
+Roles and Permissions:
+
+Support these roles: admin, hr_manager, manager, hr_staff, employee.
+
+Access control must be enforced on both frontend (menu visibility) and backend (action restrictions).
+
+Payroll Management:
+
+Calculate monthly salary including leave deductions and attendance records.
+
+Admin and HR Manager can generate payslips.
+
+User Management:
+
+Admin can add, edit, and delete users.
+
+Assign roles and departments.
+
+Department Management:
+
+CRUD operations for departments.
+
+Additional Requirements:
+
+Create a MySQL database schema (hr_portal.sql) with appropriate foreign keys and indexes.
+
+Organize files into folders (e.g., auth, dashboard, attendance, etc.).
+
+Use only PHP (procedural or OOP allowed) for backend.
+
+Include session management, login system, and secure password storage (hashing).
+
+Compatible with XAMPP on localhost, but prepare the structure for later cloud deployment.
+
+No framework or template engine should be used. Keep it simple, raw, and maintainable.
+
+Implement all core functionalities and provide sample data for testing.

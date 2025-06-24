@@ -1,0 +1,4 @@
+employee_code,full_name,email,password,role,direct_manager_email
+EMP001,John Doe,john.doe@example.com,password123,user,
+EMP002,Jane Smith,jane.smith@example.com,securepass,manager,john.doe@example.com
+EMP003,Alice Brown,alice.brown@example.com,hrpass,hr,jane.smith@example.com
