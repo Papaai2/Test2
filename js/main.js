@@ -210,7 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         usersOnLeave.forEach(userLeave => {
                             const leaveEntry = document.createElement('div');
                             leaveEntry.classList.add('leave-entry');
-                            leaveEntry.textContent = userLeave.user_name;
+                            // Add a class based on leave type for specific styling
+                            const leaveTypeClass = userLeave.leave_type.toLowerCase().replace(/\s+/g, '-');
+                            leaveEntry.classList.add(`leave-type-${leaveTypeClass}`);
+                            leaveEntry.textContent = `${userLeave.user_name} (${userLeave.leave_type})`;
                             leaveEntriesDiv.appendChild(leaveEntry);
                         });
                         calendarDay.appendChild(leaveEntriesDiv);

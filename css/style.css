@@ -62,6 +62,8 @@ a:hover {
     background-color: #1e1e1e; /* Slightly lighter than body for contrast */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Deeper, more diffused shadow */
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    position: relative; /* Ensure z-index works */
+    z-index: 1; /* Default z-index for cards */
 }
 
 .card:hover {
@@ -428,6 +430,8 @@ a:hover {
     padding: 1.75rem; /* More padding */
     color: #e0e0e0;
     border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
+    position: relative; /* Ensure z-index works */
+    z-index: 2; /* Higher z-index to appear on top */
 }
 
 .calendar-header {
@@ -469,7 +473,7 @@ a:hover {
 }
 
 .calendar-day {
-    aspect-ratio: 1;
+    aspect-ratio: 1; /* Reintroduce aspect ratio for consistent square size */
     border-radius: 0.5rem; /* Softer radius */
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -483,6 +487,7 @@ a:hover {
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
     min-height: 100px; /* Ensure a minimum height for the day cell */
+    overflow: hidden; /* Hide overflowing content */
 }
 
 .calendar-day:hover {
@@ -530,24 +535,61 @@ a:hover {
 
 .leave-entries {
     width: 100%;
-    overflow-y: auto;
+    overflow-y: auto; /* Ensure scrolling for overflowing content */
     font-size: 0.6em; /* Slightly smaller font size */
     line-height: 1.1; /* Tighter line spacing */
     text-align: left;
-    max-height: 60px; /* Fixed max-height to ensure consistent sizing */
+    max-height: 80px; /* Increased max-height to allow more content to be visible */
     margin-top: 4px; /* Small margin from day number */
     padding-right: 2px; /* Small padding for scrollbar */
+    flex-grow: 1; /* Allow leave entries to take available space */
 }
 
 .calendar-day.has-leave .leave-entry {
     background-color: rgba(0, 0, 0, 0.35); /* Darker semi-transparent for contrast */
     color: #ffffff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal; /* Allow text to wrap */
+    overflow: visible; /* Allow content to be visible */
+    text-overflow: clip; /* Prevent ellipsis */
     border-radius: 3px;
     padding: 1px 3px; /* Slightly less padding */
     margin-top: 1px; /* Reduced margin */
+}
+
+/* Specific styles for different leave types in the calendar */
+.leave-entry.leave-type-sick-leave {
+    background-color: #f56565; /* Reddish for sick leave */
+    color: #ffffff;
+}
+
+.leave-entry.leave-type-annual-leave {
+    background-color: #48bb78; /* Greenish for annual leave */
+    color: #ffffff;
+}
+
+.leave-entry.leave-type-maternity-leave {
+    background-color: #8ab4f8; /* Bluish for maternity leave */
+    color: #ffffff;
+}
+
+.leave-entry.leave-type-paternity-leave {
+    background-color: #ffd740; /* Yellowish for paternity leave */
+    color: #121212;
+}
+
+.leave-entry.leave-type-unpaid-leave {
+    background-color: #555555; /* Darker gray for unpaid leave */
+    color: #ffffff;
+}
+
+.leave-entry.leave-type-bereavement-leave {
+    background-color: #a0aec0; /* Grayish for bereavement leave */
+    color: #121212;
+}
+
+.leave-entry.leave-type-study-leave {
+    background-color: #9f7aea; /* Purplish for study leave */
+    color: #ffffff;
 }
 
 
