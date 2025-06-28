@@ -86,9 +86,9 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
         </nav>
 
         <div id="page-content-wrapper" class="d-flex flex-column flex-grow-1">
-            <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0">
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0 shadow-sm">
                 <div class="container-fluid">
-                    <button class="btn d-lg-none" id="sidebarToggle">
+                    <button class="btn d-lg-none" id="sidebarToggle" aria-label="Toggle sidebar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     
@@ -98,19 +98,18 @@ require_once __DIR__ . '/../core/helpers.php'; // Ensure helpers are included fo
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link" href="#" id="notification-bell" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-bell position-relative">
-                                            <span id="notification-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="display: none;"></span>
-                                        </i>
+                                    <a class="nav-link position-relative" href="#" id="notification-bell" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                        <i class="fas fa-bell"></i>
+                                        <span id="notification-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;"></span>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notification-bell" id="notification-dropdown">
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notification-bell" id="notification-dropdown" style="min-width: 320px;">
                                         <li><h6 class="dropdown-header">Notifications</h6></li>
-                                        <li><div id="notification-list"></div></li>
+                                        <li><div id="notification-list" class="list-group list-group-flush"></div></li>
                                         <li><a class="dropdown-item text-center small text-muted" href="/notifications.php">View all</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                                         <i class="fas fa-user-circle me-2"></i> <?php echo htmlspecialchars($_SESSION['full_name']); ?>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end">

@@ -357,4 +357,5 @@ function testConnection(deviceId, ip, port) {
         console.error('Fetch Error:', error);
     });
 }
+
 </script>

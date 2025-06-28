@@ -78,8 +78,8 @@ include __DIR__ . '/app/templates/header.php';
 ?>
 
 <div class="mb-5">
-    <h1 class="display-5 fw-bold text-white mb-2">Welcome, <?php echo htmlspecialchars($_SESSION['full_name']); ?>!</h1>
-    <p class="lead text-muted">You are logged in as a(n) <span class="badge bg-info text-dark"><?php echo htmlspecialchars(ucfirst($_SESSION['role'])); ?></span>.</p>
+    <h1 class="display-5 fw-bold text-white mb-3">Welcome, <?php echo htmlspecialchars($_SESSION['full_name']); ?>!</h1>
+    <p class="lead text-muted mb-4">You are logged in as a(n) <span class="badge bg-info text-dark"><?php echo htmlspecialchars(ucfirst($_SESSION['role'])); ?></span>.</p>
 </div>
 
 <div id="dashboard-stats" class="dashboard-stats mb-5">
@@ -223,7 +223,7 @@ include __DIR__ . '/app/templates/header.php';
                                 <div>
                                     <?= htmlspecialchars($balance['leave_type_name']) ?>
                                     <div class="balance-progress mt-1">
-                                        <div class="balance-progress-bar" role="progressbar" style="width: <?= min(100, ($balance['balance_days'] / 10) * 100) ?>%;" aria-valuenow="<?= htmlspecialchars($balance['balance_days']) ?>" aria-valuemin="0" aria-valuemax="10"></div>
+                                        <div class="balance-progress-bar" role="progressbar" style="width: <?= min(100, ($balance['balance_days'] / 21) * 100) ?>%;" aria-valuenow="<?= htmlspecialchars($balance['balance_days']) ?>" aria-valuemin="0" aria-valuemax="21"></div>
                                     </div>
                                 </div>
                                 <span class="badge bg-info rounded-pill fs-6">
@@ -239,17 +239,14 @@ include __DIR__ . '/app/templates/header.php';
          <div class="quick-actions card">
              <div class="card-body">
                 <h3 class="h5 mb-4"><i class="fas fa-bolt me-2"></i>Quick Actions</h3>
-                <a href="<?= BASE_URL ?>/requests/create.php" class="quick-action-btn">
-                    <div class="quick-action-icon"><i class="fas fa-calendar-plus"></i></div>
-                    <div><strong>New Leave Request</strong><small class="d-block text-muted">Submit a new request for time off.</small></div>
+                <a href="<?= BASE_URL ?>/requests/create.php" class="btn btn-primary w-100 mb-3 d-flex align-items-center justify-content-center gap-3">
+                    <i class="fas fa-calendar-plus"></i> New Leave Request
                 </a>
-                <a href="<?= BASE_URL ?>/requests/index.php" class="quick-action-btn">
-                    <div class="quick-action-icon"><i class="fas fa-list-alt"></i></div>
-                    <div><strong>My Requests</strong><small class="d-block text-muted">View your past and present requests.</small></div>
+                <a href="<?= BASE_URL ?>/requests/index.php" class="btn btn-outline-primary w-100 mb-3 d-flex align-items-center justify-content-center gap-3">
+                    <i class="fas fa-list-alt"></i> My Requests
                 </a>
-                <a href="<?= BASE_URL ?>/user_settings.php#change-password-section" class="quick-action-btn">
-                    <div class="quick-action-icon"><i class="fas fa-key"></i></div>
-                    <div><strong>Change Password</strong><small class="d-block text-muted">Update your account password securely.</small></div>
+                <a href="<?= BASE_URL ?>/user_settings.php#change-password-section" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-3">
+                    <i class="fas fa-key"></i> Change Password
                 </a>
              </div>
         </div>

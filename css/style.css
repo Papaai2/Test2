@@ -27,8 +27,8 @@ html, body {
 .bg-dark-theme {
     background-color: #121212 !important;
     color: #e0e0e0 !important;
-    background-image: radial-gradient(circle at top left, rgba(138, 180, 248, 0.05) 0%, transparent 30%),
-                      radial-gradient(circle at bottom right, rgba(105, 240, 174, 0.05) 0%, transparent 30%) !important;
+    background-image: radial-gradient(circle at top left, rgba(138, 180, 248, 0.1) 0%, transparent 40%),
+                      radial-gradient(circle at bottom right, rgba(105, 240, 174, 0.1) 0%, transparent 40%) !important;
     background-size: 100% 100% !important;
     background-repeat: no-repeat !important;
 }
@@ -384,13 +384,13 @@ a:hover {
 /* --- DASHBOARD WIDGET STYLES --- */
 
 .dashboard-stats {
-    background: linear-gradient(135deg, #282828 0%, #1e1e1e 100%); /* Softer gradient */
+    background: linear-gradient(135deg, #2a2a2a 0%, #1f1f1f 100%); /* Slightly darker gradient */
     color: #ffffff;
     border-radius: 1.25rem; /* Larger radius */
-    padding: 2.5rem; /* More padding */
-    margin-bottom: 2.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 3rem; /* Increased padding */
+    margin-bottom: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Slightly more visible border */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
 }
 
 .stat-card {
@@ -398,9 +398,9 @@ a:hover {
     border-radius: 1rem; /* Consistent radius */
     padding: 1.75rem; /* More padding */
     text-align: center;
-    backdrop-filter: blur(10px); /* Stronger blur */
-    border: 1px solid rgba(255, 255, 255, 0.08); /* Softer border */
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    backdrop-filter: blur(12px); /* Stronger blur */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Softer border */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
 .stat-card:hover {
@@ -411,16 +411,16 @@ a:hover {
 }
 
 .stat-number {
-    font-size: 2.8rem; /* Larger font size */
+    font-size: 3.2rem; /* Larger font size */
     font-weight: 700; /* Bolder */
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
     color: #ffffff; /* Pure white */
 }
 
 .stat-label {
-    font-size: 0.95rem; /* Slightly larger */
-    opacity: 0.9;
-    color: #b0b0b0; /* Softer muted label */
+    font-size: 1rem; /* Slightly larger */
+    opacity: 0.85;
+    color: #a0a0a0; /* Softer muted label */
 }
 
 /* Calendar Widget (Adjusted for Dark Theme - Preserve original behavior but adapt colors) */
@@ -636,18 +636,18 @@ a:hover {
 
 /* Progress bars for leave balances */
 .balance-progress {
-    height: 8px;
-    background-color: #4a5568; /* Adjusted for dark theme */
-    border-radius: 4px;
+    height: 10px;
+    background-color: #3a4a5a; /* Adjusted for dark theme */
+    border-radius: 5px;
     overflow: hidden;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
 }
 
 .balance-progress-bar {
     height: 100%;
     /* Keep original gradient for vibrancy, or adjust if desired */
-    background: linear-gradient(90deg, #48bb78, #ecc94b, #f56565); /* Updated colors to match new theme */
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, #4ade80, #facc15, #ef4444); /* Updated colors to match new theme */
+    transition: width 0.4s ease;
 }
 
 
